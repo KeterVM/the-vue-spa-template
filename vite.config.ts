@@ -14,6 +14,7 @@ import legacy from '@vitejs/plugin-legacy'
 import TurboConsole from 'unplugin-turbo-console/vite'
 import { analyzer } from 'vite-bundle-analyzer'
 import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
+import { VueRouterAutoImports } from 'unplugin-vue-router'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -40,7 +41,7 @@ export default defineConfig({
     }),
     AutoImport({
       dts: './types/auto-imports.d.ts',
-      imports: ['vue', 'vue-router', 'pinia'],
+      imports: ['vue', 'pinia', VueRouterAutoImports],
     }),
     legacy({
       targets: ['defaults', 'not IE 11'],
