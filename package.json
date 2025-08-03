@@ -18,14 +18,21 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@pinia/colada": "^0.17.1",
     "@tailwindcss/vite": "^4.1.11",
+    "@unhead/vue": "^2.0.13",
     "@vueuse/core": "^13.6.0",
     "pinia": "^3.0.3",
     "tailwindcss": "^4.1.11",
     "vue": "^3.5.18",
-    "vue-router": "^4.5.1"
+    "vue-i18n": "11",
+    "vue-router": "^4.5.1",
+    "zod": "^4.0.14",
+    "zodsei": "^0.4.0"
   },
   "devDependencies": {
+    "@intlify/unplugin-vue-i18n": "^6.0.8",
+    "@pinia/colada-devtools": "^0.1.5",
     "@playwright/test": "^1.54.1",
     "@tsconfig/node22": "^22.0.2",
     "@types/jsdom": "^21.1.7",

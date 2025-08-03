@@ -1,4 +1,5 @@
 import { fileURLToPath, URL } from 'node:url'
+import { resolve, dirname } from 'node:path'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
@@ -12,6 +13,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import legacy from '@vitejs/plugin-legacy'
 import TurboConsole from 'unplugin-turbo-console/vite'
 import { analyzer } from 'vite-bundle-analyzer'
+import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -52,6 +54,11 @@ export default defineConfig({
       // enable if need
       enabled: false,
     }),
+    VueI18nPlugin({
+      /* options */
+      // locale messages resource pre-compile option
+      include: resolve(dirname(fileURLToPath(import.meta.url)), './src/plugins/i18n/locales/**'),
+    }),
   ],
   resolve: {
     alias: {
@@ -64,4 +71,7 @@ export default defineConfig({
     },
   },
   optimizeDeps: {},
+  define: {
+    __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
+  },
 })
