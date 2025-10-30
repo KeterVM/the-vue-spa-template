@@ -4,6 +4,7 @@ import pluginVue from 'eslint-plugin-vue'
 import pluginVitest from '@vitest/eslint-plugin'
 import pluginPlaywright from 'eslint-plugin-playwright'
 import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
+import pluginVueI18n from '@intlify/eslint-plugin-vue-i18n'
 
 // To allow more languages other than `ts` in `.vue` files, uncomment the following lines:
 // import { configureVueProject } from '@vue/eslint-config-typescript'
@@ -21,6 +22,9 @@ export default defineConfigWithVueTs(
   pluginVue.configs['flat/essential'],
   vueTsConfigs.recommended,
 
+  // vue-i18n recommended rules and processors (JSON/YAML/SFC <i18n> blocks)
+  pluginVueI18n.configs['flat/recommended'],
+
   {
     ...pluginVitest.configs.recommended,
     files: ['src/**/__tests__/*'],
@@ -32,9 +36,22 @@ export default defineConfigWithVueTs(
   },
   skipFormatting,
   {
+    plugins: {
+      'vue-i18n': pluginVueI18n,
+    },
+    // i18n plugin settings for key usage checks
+    settings: {
+      'vue-i18n': {
+        localeDir: './src/plugins/i18n/locales/*.{json,json5,yaml,yml}',
+        messageSyntaxVersion: 'v9',
+      },
+    },
     rules: {
       'vue/multi-word-component-names': 'off',
       'vue/no-multiple-template-root': 'off',
+      // So CI won’t fail on i18n issues; switch to 'error' when ready
+      'vue-i18n/no-missing-keys': 'warn',
+      'vue-i18n/no-unused-keys': 'warn',
       '@typescript-eslint/no-unused-vars': [
         'error',
         {
