@@ -14,7 +14,7 @@
         "vue-i18n": "11.1.12",
         "vue-router": "^4.6.3",
         "zod": "^4.1.12",
-        "zodsei": "^1.0.0",
+        "zodsei": "^1.0.1",
       },
       "devDependencies": {
         "@intlify/eslint-plugin-vue-i18n": "^4.1.0",
@@ -1357,7 +1357,7 @@
 
     "zod": ["zod@4.1.12", "", {}, "sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ=="],
 
-    "zodsei": ["zodsei@1.0.0", "", { "dependencies": { "axios": "^1.11.0" }, "peerDependencies": { "zod": "^4.0.0" } }, "sha512-wjAR39aU8t14t6HCJd4IOlENdZr/e/LkAeARo1vitQlVvej1hbTng8v/ObmtbUQmBSavUjyCp8W3aMY5iJhkmg=="],
+    "zodsei": ["zodsei@1.0.1", "", { "dependencies": { "axios": "^1.11.0" }, "peerDependencies": { "zod": "^4.0.0" } }, "sha512-fmTGmKOW+xJEvkivfTf3yP0Z3PjkTuDvKhg9LHHKiVklNhaQ5Q16BC8IaltUy7Aja/HXML3kGrS3oZFWRtwQ7Q=="],
 
     "@babel/core/@babel/generator": ["@babel/generator@7.28.0", "", { "dependencies": { "@babel/parser": "^7.28.0", "@babel/types": "^7.28.0", "@jridgewell/gen-mapping": "^0.3.12", "@jridgewell/trace-mapping": "^0.3.28", "jsesc": "^3.0.2" } }, "sha512-lJjzvrbEeWrhB4P3QBsH7tey117PjLZnDbLiQEKjQ/fNJTjuq4HSqgFA+UNSwZT8D7dxxbnuSBMsa1lrWzKlQg=="],
 
