@@ -1,5 +1,10 @@
 import { authContract } from './contracts/auth'
 import { createClient } from 'zodsei'
+import axios from 'axios'
+
+const axiosInstance = axios.create({
+  baseURL: `${import.meta.env.DEV ? '' : import.meta.env.VITE_BASE_URL}/app/api`,
+})
 
 export const api = createClient(
   {
@@ -7,20 +12,20 @@ export const api = createClient(
   },
   {
     baseUrl: `${import.meta.env.DEV ? '' : import.meta.env.VITE_BASE_URL}/app/api`,
-    adapter: 'axios',
+    axios: axiosInstance,
     headers: {
       'Content-Type': 'application/json',
     },
-    adapterConfig: {},
     middleware: [
       async (ctx, next) => {
         const token = localStorage.getItem('token')
         ctx.headers['Authorization'] = `Bearer ${token}`
         const res = await next(ctx)
-        if (res.data.code !== 200) {
-          throw new Error(res.data.message)
+        const data = res.data as { code: number; message: string; data: unknown }
+        if (data.code !== 200) {
+          throw new Error(data.message)
         }
-        return res.data.data
+        return res
       },
     ],
   },
