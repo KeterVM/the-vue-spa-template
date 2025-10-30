@@ -11,11 +11,7 @@ export const api = createClient(
     auth: authContract,
   },
   {
-    baseUrl: `${import.meta.env.DEV ? '' : import.meta.env.VITE_BASE_URL}/app/api`,
     axios: axiosInstance,
-    headers: {
-      'Content-Type': 'application/json',
-    },
     middleware: [
       async (ctx, next) => {
         const token = localStorage.getItem('token')
