@@ -5,7 +5,6 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import vueDevTools from 'vite-plugin-vue-devtools'
-import tailwindcss from '@tailwindcss/vite'
 import router from 'unplugin-vue-router/vite'
 import { ClientSideLayout } from 'vite-plugin-layouts'
 import Components from 'unplugin-vue-components/vite'
@@ -28,7 +27,6 @@ export default defineConfig({
     vue(),
     vueJsx(),
     vueDevTools(),
-    tailwindcss(),
     ClientSideLayout(),
     Components({
       dts: './types/components.d.ts',
@@ -52,7 +50,7 @@ export default defineConfig({
       },
     }),
     analyzer({
-      // enable if need
+      // enable if you need
       enabled: false,
     }),
     VueI18nPlugin({

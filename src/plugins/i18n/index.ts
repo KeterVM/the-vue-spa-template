@@ -1,4 +1,3 @@
-import type { Locale, Composer } from 'vue-i18n'
 import { createI18n } from 'vue-i18n'
 import { nextTick } from 'vue'
 import en from './locales/en.json'
@@ -10,29 +9,38 @@ export type LocaleKey = (typeof SUPPORT_LOCALES)[number]
 export const LOCALE_STORAGE_KEY = 'locale'
 
 // create the typed i18n instance first, so helpers can use its type
-export const i18n = createI18n<[MessageSchema], string>({
-  legacy: false,
-  locale: 'en',
+export const i18n = createI18n<[MessageSchema], string, false>({
+  locale: detectLocale(),
   fallbackLocale: 'en',
   messages: {
     en,
   },
-} as const)
+  legacy: false,
+})
 
 export type AppI18n = typeof i18n
 
-export function getLocale(i18n: AppI18n): string {
-  const g = i18n.global as unknown as Composer
-  return g.locale.value
-}
+/** Current language */
+export const locale = computed({
+  get() {
+    return i18n.global.locale.value
+  },
+  set(language: string) {
+    localStorage.setItem('language', language)
+    i18n.global.locale.value = language
+  },
+})
 
-export function setLocale(i18n: AppI18n, locale: Locale): void {
-  const g = i18n.global as unknown as Composer
-  g.locale.value = String(locale)
-}
+export async function setI18nLanguage(locale: LocaleKey): Promise<void> {
+  if (!SUPPORT_LOCALES.includes(locale)) return
+  if (!i18n.global.availableLocales.includes(locale)) {
+    await loadLocaleMessages(locale)
+  }
+  i18n.global.locale.value = String(locale)
+  try {
+    localStorage.setItem(LOCALE_STORAGE_KEY, locale)
+  } catch {}
 
-export function setI18nLanguage(i18n: AppI18n, locale: Locale): void {
-  setLocale(i18n, locale)
   /**
    * NOTE:
    * If you need to specify the language setting for headers, such as the `fetch` API, set it here.
@@ -47,13 +55,12 @@ export function setI18nLanguage(i18n: AppI18n, locale: Locale): void {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getResourceMessages = (r: any) => r.default || r
 
-export async function loadLocaleMessages(i18n: AppI18n, locale: Locale) {
+export async function loadLocaleMessages(locale: LocaleKey) {
   // load locale messages
   const messages: MessageSchema = await import(`./locales/${locale}.json`).then(getResourceMessages)
 
   // set locale and locale message
-  const g = i18n.global as unknown as Composer
-  g.setLocaleMessage(String(locale), messages)
+  i18n.global.setLocaleMessage(String(locale), messages)
 
   return nextTick()
 }
@@ -85,16 +92,4 @@ export function detectLocale(fallback: LocaleKey = 'en'): LocaleKey {
     if (first) return resolveSupportedLocale(first) as LocaleKey
   }
   return fallback
-}
-
-export async function switchLocale(i18n: AppI18n, locale: LocaleKey): Promise<void> {
-  if (!SUPPORT_LOCALES.includes(locale)) return
-  const g = i18n.global as unknown as Composer
-  if (!g.availableLocales.includes(locale)) {
-    await loadLocaleMessages(i18n, locale)
-  }
-  setI18nLanguage(i18n, locale)
-  try {
-    localStorage.setItem(LOCALE_STORAGE_KEY, locale)
-  } catch {}
 }

@@ -12,7 +12,8 @@
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "types": [
       "vite-plugin-layouts/client",
-      "unplugin-vue-router"
+      "unplugin-vue-router",
+      "@intlify/unplugin-vue-i18n/messages",
     ],
     "baseUrl": ".",
     "paths": {
