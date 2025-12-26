@@ -1,18 +1,22 @@
 <script setup lang="ts">
-import { PiniaColadaDevtools } from '@pinia/colada-devtools'
-import { useHead } from '@unhead/vue'
-import { i18n, getLocale } from './plugins/i18n'
 
+import { useHead } from '@unhead/vue'
+import { getLocale } from './plugins/i18n'
+import { VueQueryDevtools } from '@tanstack/vue-query-devtools'
 useHead({
   title: 'The Vue SPA Template',
   htmlAttrs: {
-    lang: () => getLocale(i18n),
+    lang: () => getLocale(),
   },
+})
+
+onMounted(() => {
+  console.log('App')
 })
 </script>
 
 <template>
-  <PiniaColadaDevtools />
+  <VueQueryDevtools />
   <RouterView />
 </template>
 

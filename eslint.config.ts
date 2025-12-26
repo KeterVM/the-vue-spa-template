@@ -5,6 +5,7 @@ import pluginVitest from '@vitest/eslint-plugin'
 import pluginPlaywright from 'eslint-plugin-playwright'
 import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
 import pluginVueI18n from '@intlify/eslint-plugin-vue-i18n'
+import pluginQuery from '@tanstack/eslint-plugin-query'
 
 // To allow more languages other than `ts` in `.vue` files, uncomment the following lines:
 // import { configureVueProject } from '@vue/eslint-config-typescript'
@@ -38,6 +39,7 @@ export default defineConfigWithVueTs(
   {
     plugins: {
       'vue-i18n': pluginVueI18n,
+      '@tanstack/query': pluginQuery,
     },
     // i18n plugin settings for key usage checks
     settings: {
